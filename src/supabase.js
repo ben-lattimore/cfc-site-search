@@ -146,7 +146,7 @@ async function searchDocuments(query, options = {}) {
     
     // Search using the database function
     const { data, error } = await supabase
-      .rpc('search_documents', {
+      .rpc('match_documents', {
         query_embedding: queryEmbedding,
         match_threshold: matchThreshold,
         match_count: matchCount

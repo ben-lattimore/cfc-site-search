@@ -8,6 +8,8 @@
     "dev": "nodemon src/index.js",
     "chunks": "node src/index.js",
     "upload": "node -e \"require('./src/supabase').uploadAllChunks()\"",
+    "clear": "node -e \"require('./src/supabase').clearAllDocuments()\"",
+    "fresh": "npm run clear && npm run chunks && npm run upload",
     "clean": "rm -rf output/chunks/* output/processing_summary.json"
   },
   "dependencies": {

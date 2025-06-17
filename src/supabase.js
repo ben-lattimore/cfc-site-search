@@ -163,10 +163,33 @@ async function searchDocuments(query, options = {}) {
   }
 }
 
+// Function to clear all documents from the database
+async function clearAllDocuments() {
+  try {
+    console.log('🗑️  Clearing all documents from database...');
+    
+    const { error } = await supabase
+      .from('documents')
+      .delete()
+      .neq('id', 0); // This will delete all rows
+    
+    if (error) {
+      throw error;
+    }
+    
+    console.log('✅ Database cleared successfully');
+    return true;
+  } catch (error) {
+    console.error('❌ Error clearing database:', error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   supabase,
   uploadChunk,
   uploadAllChunks,
   searchDocuments,
-  generateEmbedding
+  generateEmbedding,
+  clearAllDocuments
 };

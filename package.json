@@ -1,0 +1,23 @@
+{
+  "name": "cfc-site-data-builder",
+  "version": "1.0.0",
+  "description": "Fetches Cast from Clay posts and converts to markdown for vector database",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "chunks": "node src/index.js",
+    "upload": "node -e \"require('./src/supabase').uploadAllChunks()\"",
+    "clean": "rm -rf output/chunks/* output/processing_summary.json"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0",
+    "fs-extra": "^11.1.0",
+    "openai": "^5.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}

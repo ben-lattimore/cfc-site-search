@@ -1,29 +1,32 @@
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs-extra');
 const path = require('path');
+const OpenAI = require('openai');
 require('dotenv').config();
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY // Changed from SUPABASE_ANON_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// Function to generate embeddings (you'll need to implement this)
+// Function to generate embeddings using OpenAI
 async function generateEmbedding(text) {
-  // This is a placeholder - you'll need to integrate with OpenAI or another embedding service
-  // Example with OpenAI:
-  /*
-  const response = await openai.embeddings.create({
-    model: "text-embedding-ada-002",
-    input: text,
-  });
-  return response.data[0].embedding;
-  */
-  
-  // For now, return a dummy embedding
-  console.warn('⚠️  Using dummy embedding - implement real embedding generation');
-  return new Array(1536).fill(0).map(() => Math.random());
+  try {
+    const response = await openai.embeddings.create({
+      model: "text-embedding-ada-002",
+      input: text,
+    });
+    return response.data[0].embedding;
+  } catch (error) {
+    console.error('Error generating embedding:', error);
+    throw error;
+  }
 }
 
 // Function to parse frontmatter from markdown
